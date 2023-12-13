@@ -1,13 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const projectRoutes = require('./routes/project-routes')
-const settings = require('./settings.json')
+const bodyParser = require('body-parser');
+const settings = require('./settings.json');
+const projectRoutes = require('./routes/project-routes');
+
+
 
 const PORT = 80;
 const URL = settings.connectUrl;
+
 const app = express();
-app.use(express.json());
-app.use(projectRoutes)
+
+app.use(bodyParser.json());
+app.use(projectRoutes);
+
 
 mongoose
   .connect(URL)

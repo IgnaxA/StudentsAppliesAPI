@@ -1,10 +1,7 @@
 const Project = require('../models/project');
+const { validationHandler, errorHandler } = require('./error-handler');
 
-const errorHandler = (res, error) => {
-    res
-      .status(500)
-      .json({ error });
-};
+
 
 const getProjects = (req, res) => {
     Project
@@ -40,6 +37,13 @@ const deleteProject = (req, res) => {
 };
 
 const addProject = (req, res) => {
+    validationResult = validationHandler(req); 
+
+    if (validationResult) {
+      errorHandler(res, validationResult);
+      return;
+    }
+
     const project = new Project(req.body);
     project
       .save()
