@@ -44,6 +44,6 @@ const projectSchema = new Schema({
     }
 });
 
-const Project = mongoose.model('project', projectSchema);
+const Project = mongoose.model('projects', projectSchema);
 
 module.exports = Project;

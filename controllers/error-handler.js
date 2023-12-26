@@ -7,29 +7,23 @@ const errorHandler = (res, error) => {
 };
 
 const validationHandler = (req) => {
-    bodyType = req.rawHeaders[1];
-    body = req.body;
-    schemaAttributes = Object.keys(Project.schema.obj); 
-
-    error = checkRequestBody(bodyType); 
-
-    if (error) {
-        return error;
-    }
-
-    const bodyJson = Object.keys(body);
-    error = checkBodyAttributes(schemaAttributes, bodyJson);
     
-    if (error) {
-        return error;
+    try {
+        bodyType = req.rawHeaders[1];
+        body = req.body;
+        schemaAttributes = Object.keys(Project.schema.obj); 
+
+        checkRequestBody(bodyType); 
+
+        const bodyJson = Object.keys(body);
+        checkBodyAttributes(schemaAttributes, bodyJson);
+        
+        checkBodyAttributesExisting(schemaAttributes, bodyJson);
     }
-
-    error = checkBodyAttributesExisting(schemaAttributes, bodyJson);
-
-    if (error) {
-        return error;
+    catch (err) {
+        return err;
     }
-
+    
     return null;
 };
 
@@ -39,10 +33,8 @@ const checkRequestBody = (bodyType) => {
     bodyJsonCheckError = "Request got wrong body data type!";
 
     if (bodyType !== 'application/json') {
-        return bodyJsonCheckError;
+        throw bodyJsonCheckError;
     }
-
-    return null;
 };
 
 const checkBodyAttributes = (schemaAttributes, bodyJson) => {
@@ -50,10 +42,8 @@ const checkBodyAttributes = (schemaAttributes, bodyJson) => {
     const attributeCheckError = "Has been sent more JSON attributes that exist!";
     
     if (schemaAttributes.length < bodyJson.length) {
-        return attributeCheckError;
+        throw attributeCheckError;
     }
-
-    return null;
 };
 
 const checkBodyAttributesExisting = (schemaAttributes, bodyJson) => {
@@ -62,11 +52,9 @@ const checkBodyAttributesExisting = (schemaAttributes, bodyJson) => {
 
     for (const attributeName of bodyJson) {
         if (schemaAttributes.indexOf(attributeName) === -1) {
-            return attributeExistingCheckError;
+            throw attributeExistingCheckError;
         }
     }
-
-    return null;
 };
 
 module.exports = {

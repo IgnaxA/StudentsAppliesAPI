@@ -9,10 +9,10 @@ const {
 
 const projectRouter = express.Router();
 
-projectRouter.get('/project', getProjects);
-projectRouter.get('/project/:id', getProject);
-projectRouter.delete('/project/:id', deleteProject);
-projectRouter.post('/project', addProject);
-projectRouter.patch('/project/:id', updateProject);
+projectRouter.get('/projects', getProjects);
+projectRouter.get('/projects/:id', getProject);
+projectRouter.delete('/projects/:id', deleteProject);
+projectRouter.post('/projects', addProject);
+projectRouter.patch('/projects/:id', updateProject);
 
 module.exports = projectRouter;
