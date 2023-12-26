@@ -6,7 +6,9 @@ const Schema = mongoose.Schema;
 const projectSchema = new Schema({
     project_name: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        match: ""
     },
     teacher_id: {
         type: ObjectId,

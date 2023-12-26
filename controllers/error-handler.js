@@ -12,7 +12,7 @@ const validationHandler = (req) => {
     schemaAttributes = Object.keys(Project.schema.obj); 
 
     error = checkRequestBody(bodyType); 
-    
+
     if (error) {
         return error;
     }
@@ -43,7 +43,7 @@ const checkRequestBody = (bodyType) => {
     }
 
     return null;
-}
+};
 
 const checkBodyAttributes = (schemaAttributes, bodyJson) => {
     
@@ -54,7 +54,7 @@ const checkBodyAttributes = (schemaAttributes, bodyJson) => {
     }
 
     return null;
-}
+};
 
 const checkBodyAttributesExisting = (schemaAttributes, bodyJson) => {
 
@@ -67,7 +67,7 @@ const checkBodyAttributesExisting = (schemaAttributes, bodyJson) => {
     }
 
     return null;
-}
+};
 
 module.exports = {
     validationHandler,

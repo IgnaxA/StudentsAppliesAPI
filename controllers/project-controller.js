@@ -1,10 +1,8 @@
 const Project = require('../models/project');
 const { validationHandler, errorHandler } = require('./error-handler');
 
-
-
-const getProjects = (req, res) => {
-    Project
+const getProjects = async (req, res) => {
+    await Project
       .find()
       .then((projects) => {
         res
@@ -14,8 +12,8 @@ const getProjects = (req, res) => {
       .catch((err) => errorHandler(res, err));
 };
 
-const getProject = (req, res) => {
-    Project
+const getProject = async (req, res) => {
+    await Project
       .findById( req.params.id )
       .then((project) => {
         res
@@ -25,8 +23,8 @@ const getProject = (req, res) => {
       .catch((err) => errorHandler(res, err));
 };
 
-const deleteProject = (req, res) => {
-    Project
+const deleteProject = async (req, res) => {
+    await Project
       .findOneAndDelete( req.params.id )
       .then((result) => {
         res
@@ -36,7 +34,7 @@ const deleteProject = (req, res) => {
       .catch((err) => errorHandler(res, err));
 };
 
-const addProject = (req, res) => {
+const addProject = async (req, res) => {
     validationResult = validationHandler(req); 
 
     if (validationResult) {
@@ -45,7 +43,7 @@ const addProject = (req, res) => {
     }
 
     const project = new Project(req.body);
-    project
+    await project
       .save()
       .then((result) => {
         res
@@ -55,8 +53,15 @@ const addProject = (req, res) => {
       .catch((err) => errorHandler(res, err));
 };
 
-const updateProject = (req, res) => {
-    Project
+const updateProject = async (req, res) => {
+    validationResult = validationHandler(req); 
+
+    if (validationResult) {
+      errorHandler(res, validationResult);
+      return;
+    }
+    
+    await Project
       .findByIdAndUpdate( req.params.id, req.body )
       .then((result) => {
         res

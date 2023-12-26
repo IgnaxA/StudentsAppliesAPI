@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const settings = require('./settings.json');
 const projectRoutes = require('./routes/project-routes');
 
-
-
 const PORT = 80;
 const URL = settings.connectUrl;
 
@@ -13,7 +11,6 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(projectRoutes);
-
 
 mongoose
   .connect(URL)
